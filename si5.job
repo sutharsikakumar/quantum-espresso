@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH -N 1
+#SBATCH -p RM-shared
+#SBATCH --ntasks-per-node=50
+#SBATCH --job-name=si5
+#SBATCH -t 00:30:00
+#SBATCH -o Si5.out
+#SBATCH -e Si5.err
+
+ulimit -s unlimited
+export OMP_NUM_THREADS=1
+echo "SLURM_NTASKS: " $SLURM_NTASKS
+# module load intelmpi/2021.3.0-intel2021.3.0 QuantumEspresso/7.2-intel
+module load intelmpi
+mpirun -np $SLURM_NTASKS /opt/packages/QuantumEspresso/qe-7.2/intel/bin/pw.x -input si5.in > si5.out
+
